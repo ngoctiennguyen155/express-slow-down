@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const slowDown = require('express-slow-down')
+const address = require('address');
 
 const app = express()
 app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
@@ -15,10 +16,15 @@ const speedLimiter = slowDown({
   // request # 103 is delayed by 1500ms
   // etc.
 });
+app.use((req,res,next)=>{
+  req.ip = address.ip();
+  next()
+})
 app.use(cors())
 
 app.get("/",speedLimiter,(req,res)=>{
     res.status(200).json({message:"ok" + req.ip})
 })
 
+// console.log(address.ip());
 app.listen(process.env.PORT || 3000);
