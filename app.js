@@ -7,7 +7,7 @@ app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Blu
 
 const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  delayAfter: 100, // allow 100 requests per 15 minutes, then...
+  delayAfter: 10, // allow 100 requests per 15 minutes, then...
   delayMs: 60*1000, // begin adding 500ms of delay per request above 100:
   maxDelayMs: 10*60 *1000,
   // request # 101 is delayed by  500ms
