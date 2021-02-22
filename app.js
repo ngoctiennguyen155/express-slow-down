@@ -18,7 +18,7 @@ const speedLimiter = slowDown({
 app.use(cors())
 
 app.get("/",speedLimiter,(req,res)=>{
-    res.status(200).json({message:"ok"})
+    res.status(200).json({message:"ok" + req.ip})
 })
 
 app.listen(process.env.PORT || 3000);
